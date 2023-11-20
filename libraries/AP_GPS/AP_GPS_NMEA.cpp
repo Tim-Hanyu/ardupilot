@@ -341,7 +341,7 @@ bool AP_GPS_NMEA::_term_complete()
                 case _GPS_SENTENCE_HDT:
                 case _GPS_SENTENCE_THS:
                     _last_yaw_ms = now;
-                    state.gps_yaw = wrap_360(_new_gps_yaw*0.01f);
+                    state.gps_yaw = wrap_360(_new_gps_yaw*0.01f + 90.0f);
                     state.have_gps_yaw = true;
                     state.gps_yaw_time_ms = AP_HAL::millis();
                     // remember that we are setup to provide yaw. With
@@ -392,7 +392,7 @@ bool AP_GPS_NMEA::_term_complete()
                     if (is_equal(3.0f, _ksxt.fields[10])) {
                         // have good yaw (from RTK fixed moving baseline solution)
                         _last_yaw_ms = now;
-                        state.gps_yaw = _ksxt.fields[4];
+                        state.gps_yaw =wrap_360((float) _ksxt.fields[4] + 90.0f);
                         state.have_gps_yaw = true;
                         state.gps_yaw_time_ms = AP_HAL::millis();
                         state.gps_yaw_configured = true;
